@@ -1,4 +1,4 @@
--- drop database if exists PlataformaRecetasDB;
+drop database if exists PlataformaRecetasDB;
 create database PlataformaRecetasDB;
 use PlataformaRecetasDB;
 
