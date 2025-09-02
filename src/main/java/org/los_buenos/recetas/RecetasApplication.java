@@ -3,7 +3,7 @@ package org.los_buenos.recetas;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class RecetasApplication {
 
 	public static void main(String[] args) {
