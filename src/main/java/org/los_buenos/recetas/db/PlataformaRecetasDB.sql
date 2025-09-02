@@ -1,4 +1,4 @@
-drop database if exists PlataformaRecetasDB;
+-- drop database if exists PlataformaRecetasDB;
 create database PlataformaRecetasDB;
 use PlataformaRecetasDB;
 
@@ -6,8 +6,9 @@ create table Usuarios(
 	idUsuario integer auto_increment,
     nombreUsuario varchar(64),
     apellidoUsuario varchar(64),
+    correo varchar(128),
     contraseña varchar(64),
-    rol varchar(64),
+    rol enum('Usuario', 'Moderador') default 'Usuario',
     constraint pk_usuario primary key (idUsuario)
 );
 
