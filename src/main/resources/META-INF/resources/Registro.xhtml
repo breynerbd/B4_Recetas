@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Registro - RecetasWeb</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
-
     <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
     <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-orange.css"/>
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -74,66 +72,57 @@
 </h:head>
 <h:body class="min-h-screen flex align-items-center justify-content-center p-4" style="background: linear-gradient(to bottom right, var(--orange-50), var(--orange-100));">
     <div class="w-full max-w-30rem">
-        <div class="text-center mb-6">
-            <div class="inline-flex align-items-center justify-content-center w-8rem h-8rem bg-orange-100 border-circle mb-4 shadow-3">
-                <span class="text-8xl">🔒</span>
-            </div>
-            <h1 class="text-5xl font-bold text-orange-800 m-0 mb-2 pacifico-font">Registrate!</h1>
-            <p class="text-lg text-700 m-0 mb-3 font-light">Crea una nueva cuenta</p>
-            <span class="bg-orange-500 text-white px-4 py-2 border-round-3xl text-xs font-semibold text-uppercase">
-                Registro de cuenta
-            </span>
-            <div class="w-4rem h-0 border-bottom-3 border-orange-400 mx-auto mt-4"></div>
-        </div>
-
+        <p:growl id="mensajes" showDetail="true" />
         <div class="surface-card p-6 border-round-3xl shadow-8 border-1 border-orange-200 bg-white">
             <h:form id="registerForm">
                 <div class="mb-4">
-                    <h:outputLabel for="alias"
-                                   value="Nombre de Usuario"
-                                   styleClass="block text-900 font-semibold mb-2 text-sm"/>
-                    <h:inputText id="alias"
-                                 value="#{registerBean.alias}"
+                    <p:outputLabel for="nombreUsuario" value="Nombre de Usuario" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:inputText id="nombreUsuario"
+                                 value="#{registerController.nuevoUsuario.nombreUsuario}"
                                  required="true"
-                                 requiredMessage="El Nombre es obligatorio."
+                                 requiredMessage="El Nombre de Usuario es obligatorio."
                                  placeholder="TuAlias"
+                                 styleClass="input-field"/>
+                </div>
+                <div class="mb-4">
+                    <p:outputLabel for="apellidoUsuario" value="Apellido de Usuario" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:inputText id="apellidoUsuario"
+                                 value="#{registerController.nuevoUsuario.apellidoUsuario}"
+                                 required="true"
+                                 requiredMessage="El Apellido de Usuario es obligatorio."
+                                 placeholder="Tu Apellido"
                                  styleClass="input-field"/>
                 </div>
 
                 <div class="mb-4">
-                    <h:outputLabel for="email"
-                                   value="Correo Electrónico"
-                                   styleClass="block text-900 font-semibold mb-2 text-sm"/>
-                    <h:inputText id="email"
-                                 value="#{registerBean.email}"
+                    <p:outputLabel for="email" value="Correo Electrónico" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:inputText id="email"
+                                 value="#{registerController.nuevoUsuario.email}"
                                  required="true"
                                  requiredMessage="El correo es obligatorio."
                                  validatorMessage="Formato de correo no válido."
-                                 placeholder="moderador@recetas.com"
+                                 placeholder="correo@ejemplo.com"
                                  styleClass="input-field">
                         <f:validateRegex pattern="^[\w\.-]+@[\w\.-]+\.\w+$" />
-                    </h:inputText>
+                    </p:inputText>
                 </div>
 
                 <div class="mb-5">
-                    <h:outputLabel for="password"
-                                   value="Contraseña"
-                                   styleClass="block text-900 font-semibold mb-2 text-sm"/>
-                    <h:inputSecret id="password"
-                                   value="#{registerBean.password}"
-                                   required="true"
-                                   requiredMessage="La contraseña es obligatoria."
-                                   placeholder="••••••••"
-                                   styleClass="input-field"/>
+                    <p:outputLabel for="password" value="Contraseña" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:password id="password"
+                                value="#{registerController.nuevoUsuario.contraseña}"
+                                required="true"
+                                requiredMessage="La contraseña es obligatoria."
+                                placeholder="••••••••"
+                                styleClass="input-field" feedback="true" />
                 </div>
 
                 <div class="mb-4">
-                    <h:commandButton styleClass="custom-button custom-button-primary"
+                    <p:commandButton styleClass="custom-button custom-button-primary"
                                      value="Crear Cuenta"
-                                     action="#{registerBean.register}"/>
+                                     action="#{registerController.guardarUsuario}"
+                                     update="registerForm :dialogRegistroExitoso" />
                 </div>
-
-                <h:messages styleClass="error-message" globalOnly="true" showDetail="true"/>
             </h:form>
 
             <div class="text-center mt-5 pt-4 border-top-1 border-orange-100">
@@ -142,7 +131,17 @@
                 </a>
             </div>
         </div>
-
     </div>
+
+    <p:dialog header="¡Registro Exitoso!" widgetVar="dialogRegistroExitoso" modal="true" responsive="true">
+        <div class="text-center p-4">
+            <i class="pi pi-check-circle" style="font-size: 3rem; color: var(--green-500);"></i>
+            <h:outputText value="Tu cuenta ha sido creada exitosamente. Ahora puedes iniciar sesión." styleClass="block mt-3 mb-4"/>
+            <p:commandButton value="Ir a Iniciar Sesión"
+                             action="#{RegisterController.redirigirALogin}"
+                             styleClass="ui-button-success" />
+        </div>
+    </p:dialog>
+
 </h:body>
 </html>
