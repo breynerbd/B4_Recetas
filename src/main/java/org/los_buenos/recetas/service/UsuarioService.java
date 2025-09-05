@@ -13,11 +13,9 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public Optional<Usuario> buscarUsuarioPorEmailYContraseña(String email, String contraseña) {
-        // Aquí es crucial que implementes la lógica de encriptación de contraseñas.
-        // NUNCA guardes las contraseñas en texto plano.
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email); // Asume que tienes este método en tu repositorio
 
-        // Simulación de una validación de contraseña:
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+
         if (usuario.isPresent() && usuario.get().getContraseña().equals(contraseña)) {
             return usuario;
         }
@@ -41,7 +39,7 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Optional<Usuario> buscarUsuarioPorNombreUsuario(String nombreUsuario) {
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
-    } // <-- Implementación del nuevo método
+    }
 
     @Override
     public void guardarUsuario(Usuario usuario) {

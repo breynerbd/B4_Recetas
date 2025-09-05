@@ -11,5 +11,5 @@ public interface IRecetaService {
     void guardarReceta(Receta receta);
     void eliminarReceta(Receta receta);
     List<Receta> buscarRecetasPorIngredientes(String ingredientes);
-    List<Receta> buscarRecetasPorTiempo(String tiempo); // <-- Agrega esta línea
+    List<Receta> buscarRecetasPorTiempo(Integer tiempo);
 }

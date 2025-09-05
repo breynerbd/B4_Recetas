@@ -5,8 +5,6 @@ import org.los_buenos.recetas.repository.RecetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -43,15 +41,10 @@ public class RecetaService implements IRecetaService {
     }
 
     @Override
-    public List<Receta> buscarRecetasPorTiempo(String tiempo) {
-        // Convierte el String a LocalTime antes de llamar al repositorio
-        try {
-            LocalTime tiempoBusqueda = LocalTime.parse(tiempo);
-            return recetaRepository.findByTiempoPreparacionIsLessThan(tiempoBusqueda);
-        } catch (DateTimeParseException e) {
-            // Manejar la excepción si el formato no es válido
-            System.err.println("Formato de tiempo no válido: " + tiempo);
+    public List<Receta> buscarRecetasPorTiempo(Integer tiempo) { // Cambiado a Integer
+        if (tiempo == null) {
             return Collections.emptyList();
         }
+        return recetaRepository.findByTiempoPreparacionIsLessThan(tiempo);
     }
 }

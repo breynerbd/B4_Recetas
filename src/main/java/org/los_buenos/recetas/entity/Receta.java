@@ -7,13 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.io.Serializable;
-import java.time.LocalTime;
 
 @Entity(name = "Recetas")
 @Data
@@ -31,9 +31,15 @@ public class Receta implements Serializable {
     private String tituloReceta;
     private String ingredientes;
     private String instrucciones;
-    private LocalTime tiempoPreparacion;
+    private Integer tiempoPreparacion;
+
+    // Campo añadido para resolver el error de "Property not found"
+    @Column(name = "url_imagen")
+    private String urlImagen;
 
     @ManyToOne
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
+
+
 }

@@ -44,12 +44,12 @@ public class UsuarioController {
     public void guardarUsuario() {
         logger.info("Usuario a guardar: " + this.usuarioSeleccionado);
         if (this.usuarioSeleccionado.getIdUsuario() == null) {
-            // Agregar nuevo usuario
+
             this.usuarioService.guardarUsuario(this.usuarioSeleccionado);
             this.usuarios.add(this.usuarioSeleccionado);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario agregado"));
         } else {
-            // Modificar usuario existente
+
             this.usuarioService.guardarUsuario(this.usuarioSeleccionado);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario actualizado"));
         }

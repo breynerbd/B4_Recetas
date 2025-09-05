@@ -9,18 +9,18 @@ import java.io.Serializable;
 import java.util.Optional;
 import jakarta.inject.Inject;
 
-@Named // CDI Managed Bean
-@ViewScoped // Ciclo de vida de la vista
+@Named
+@ViewScoped
 public class loginController implements Serializable {
 
     @Inject
     private UsuarioService usuarioService;
 
-    // Campos del formulario
+
     private String email;
     private String password;
 
-    // **¡AÑADE ESTOS GETTERS Y SETTERS!**
+
     public String getEmail() {
         return email;
     }
@@ -38,7 +38,7 @@ public class loginController implements Serializable {
     }
 
     public String login() {
-        // Lógica de autenticación...
+
         Optional<Usuario> usuarioEncontrado = usuarioService.buscarUsuarioPorEmailYContraseña(this.email, this.password);
 
         if (usuarioEncontrado.isPresent()) {

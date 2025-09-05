@@ -8,7 +8,7 @@ public interface IUsuarioService {
 
     List<Usuario> listarUsuarios();
     Optional<Usuario> buscarUsuarioPorId(Integer idUsuario);
-    Optional<Usuario> buscarUsuarioPorNombreUsuario(String nombreUsuario); // <-- Nuevo método
+    Optional<Usuario> buscarUsuarioPorNombreUsuario(String nombreUsuario);
     void guardarUsuario(Usuario usuario);
     void eliminarUsuario(Usuario usuario);
     public Optional<Usuario> buscarUsuarioPorEmailYContraseña(String email, String contraseña);

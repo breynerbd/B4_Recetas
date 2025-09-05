@@ -17,14 +17,14 @@ public class RegisterController implements Serializable {
     @Inject
     private UsuarioService usuarioService;
 
-    private Usuario nuevoUsuario; // Esta es la propiedad que necesitas
+    private Usuario nuevoUsuario;
 
     @PostConstruct
     public void init() {
         nuevoUsuario = new Usuario();
     }
 
-    // **¡AÑADE ESTOS GETTERS Y SETTERS!**
+
     public Usuario getNuevoUsuario() {
         return nuevoUsuario;
     }

@@ -7,8 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CalificacionRepository extends JpaRepository<Calificacion, Integer> {
-    // Aquí puedes agregar métodos personalizados si es necesario,
-    // como buscar todas las calificaciones para una receta.
-    // Ejemplo:
-    // List<Calificacion> findByReceta(Receta receta);
+
 }

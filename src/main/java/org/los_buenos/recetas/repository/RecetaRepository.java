@@ -12,6 +12,5 @@ public interface RecetaRepository extends JpaRepository<Receta, Integer> {
 
     List<Receta> findByIngredientesContainingIgnoreCase(String ingredientes);
 
-    // Nuevo método para buscar por tiempo de preparación
-    List<Receta> findByTiempoPreparacionIsLessThan(LocalTime tiempo);
+    List<Receta> findByTiempoPreparacionIsLessThan(Integer tiempo);
 }
