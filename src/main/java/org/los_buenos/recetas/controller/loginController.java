@@ -42,11 +42,26 @@ public class loginController implements Serializable {
         Optional<Usuario> usuarioEncontrado = usuarioService.buscarUsuarioPorEmailYContraseña(this.email, this.password);
 
         if (usuarioEncontrado.isPresent()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Exitoso", "Bienvenido de nuevo!"));
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioLogeado", usuarioEncontrado.get());
-            return "menuPrincipal?faces-redirect=true";
+            Usuario usuario = usuarioEncontrado.get();
+
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioLogeado", usuario);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Exitoso", "Bienvenido de nuevo!"));
+
+            if ("Usuario".equalsIgnoreCase(usuario.getRol())) {
+                return "menuPrincipal?faces-redirect=true";
+            } else if ("Moderador".equalsIgnoreCase(usuario.getRol())) {
+                return "gestionAdmin?faces-redirect=true";
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "No tienes rol",
+                                "No tienes permisos para ir ahi."));
+                return null;
+            }
+
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Login", "Correo o contraseña incorrectos."));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Login", "Correo o contraseña incorrectos."));
             return null;
         }
     }

@@ -35,12 +35,16 @@ public class RegisterController implements Serializable {
 
     public String guardarUsuario() {
         try {
+            nuevoUsuario.setRol("Usuario");
+
             usuarioService.guardarUsuario(nuevoUsuario);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro Exitoso", "¡Bienvenido a RecetasWeb!"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro Exitoso", "¡Bienvenido a RecetasWeb!"));
             return "login?faces-redirect=true";
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Registro", "No se pudo registrar al usuario."));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Registro", "No se pudo registrar al usuario."));
             return null;
         }
     }
