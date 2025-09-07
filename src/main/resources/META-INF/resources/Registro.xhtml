@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Registro - RecetasWeb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-orange.css"/>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .pacifico-font {
+            font-family: 'Poppins', sans-serif;
+        }
+        .custom-button {
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            width: 100%;
+        }
+
+        .custom-button-primary {
+            background-color: var(--orange-500);
+            color: white;
+        }
+        .custom-button-primary:hover {
+            background-color: var(--orange-600);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--orange-200);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            background: var(--surface-0);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--orange-400);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.1);
+        }
+
+        .error-message {
+            background: var(--red-50);
+            border: 1px solid var(--red-200);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--red-600);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            display: block;
+        }
+    </style>
+</h:head>
+<h:body class="min-h-screen flex align-items-center justify-content-center p-4" style="background: linear-gradient(to bottom right, var(--orange-50), var(--orange-100));">
+    <div class="w-full max-w-30rem">
+        <p:growl id="mensajes" showDetail="true" />
+        <div class="surface-card p-6 border-round-3xl shadow-8 border-1 border-orange-200 bg-white">
+            <h:form id="registerForm">
+                <div class="mb-4">
+                    <p:outputLabel for="nombreUsuario" value="Nombre de Usuario" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:inputText id="nombreUsuario"
+                                 value="#{registerController.nuevoUsuario.nombreUsuario}"
+                                 required="true"
+                                 requiredMessage="El Nombre de Usuario es obligatorio."
+                                 placeholder="TuAlias"
+                                 styleClass="input-field"/>
+                </div>
+                <div class="mb-4">
+                    <p:outputLabel for="apellidoUsuario" value="Apellido de Usuario" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:inputText id="apellidoUsuario"
+                                 value="#{registerController.nuevoUsuario.apellidoUsuario}"
+                                 required="true"
+                                 requiredMessage="El Apellido de Usuario es obligatorio."
+                                 placeholder="Tu Apellido"
+                                 styleClass="input-field"/>
+                </div>
+
+                <div class="mb-4">
+                    <p:outputLabel for="email" value="Correo Electrónico" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:inputText id="email"
+                                 value="#{registerController.nuevoUsuario.email}"
+                                 required="true"
+                                 requiredMessage="El correo es obligatorio."
+                                 validatorMessage="Formato de correo no válido."
+                                 placeholder="correo@ejemplo.com"
+                                 styleClass="input-field">
+                        <f:validateRegex pattern="^[\w\.-]+@[\w\.-]+\.\w+$" />
+                    </p:inputText>
+                </div>
+
+                <div class="mb-5">
+                    <p:outputLabel for="password" value="Contraseña" styleClass="block text-900 font-semibold mb-2 text-sm"/>
+                    <p:password id="password"
+                                value="#{registerController.nuevoUsuario.contraseña}"
+                                required="true"
+                                requiredMessage="La contraseña es obligatoria."
+                                placeholder="••••••••"
+                                styleClass="input-field" feedback="true" />
+                </div>
+
+                <div class="mb-4">
+                    <p:commandButton styleClass="custom-button custom-button-primary"
+                                     value="Crear Cuenta"
+                                     action="#{registerController.guardarUsuario}"
+                                     update="registerForm :dialogRegistroExitoso" />
+                </div>
+            </h:form>
+
+            <div class="text-center mt-5 pt-4 border-top-1 border-orange-100">
+                <a href="login.xhtml" class="text-orange-600 text-sm no-underline hover:text-orange-700">
+                    ¿Ya tienes una cuenta?
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <p:dialog header="¡Registro Exitoso!" widgetVar="dialogRegistroExitoso" modal="true" responsive="true">
+        <div class="text-center p-4">
+            <i class="pi pi-check-circle" style="font-size: 3rem; color: var(--green-500);"></i>
+            <h:outputText value="Tu cuenta ha sido creada exitosamente. Ahora puedes iniciar sesión." styleClass="block mt-3 mb-4"/>
+            <p:commandButton value="Ir a Iniciar Sesión"
+                             action="#{RegisterController.redirigirALogin}"
+                             styleClass="ui-button-success" />
+        </div>
+    </p:dialog>
+
+</h:body>
+</html>
+
+<!--terminada vista registro-->

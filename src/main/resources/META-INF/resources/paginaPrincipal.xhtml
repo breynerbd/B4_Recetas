@@ -1,10 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>RecetasWeb - Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-orange.css"/>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .pacifico-font {
+            font-family: 'Poppins', sans-serif;
+        }
+        .custom-button {
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-button-primary {
+            background-color: var(--orange-500);
+            color: white;
+            border: none;
+        }
+        .custom-button-primary:hover {
+            background-color: var(--orange-600);
+        }
+
+        .custom-button-secondary {
+            background-color: transparent;
+            color: var(--orange-600);
+            border: 1px solid var(--orange-400);
+        }
+        .custom-button-secondary:hover {
+            background-color: var(--orange-50);
+        }
+    </style>
+</h:head>
+<h:body class="min-h-screen flex align-items-center justify-content-center p-4" style="background: linear-gradient(to bottom right, var(--orange-50), var(--orange-100));">
+    <div class="w-full max-w-30rem">
+        <div class="text-center mb-6">
+            <div class="inline-flex align-items-center justify-content-center w-8rem h-8rem bg-orange-100 border-circle mb-4 shadow-3">
+                <span class="text-8xl">🍜</span>
+            </div>
+            <h1 class="text-6xl font-bold text-orange-800 m-0 mb-2 pacifico-font">RecetasWeb</h1>
+            <div class="w-4rem h-0 border-bottom-3 border-orange-400 mx-auto mb-4"></div>
+        </div>
+        <div class="surface-card p-6 border-round-3xl shadow-8 border-1 border-orange-200 bg-white">
+            <div class="text-center mb-5">
+                <p class="text-xl text-700 line-height-3 m-0 font-light text-color">
+                    Descubre, cocina y comparte tus recetas favoritas.
+                    <br class="hidden md:inline"/>
+                    ¡Únete a nuestra comunidad culinaria!
+                </p>
+            </div>
+            <div class="flex flex-column md:flex-row gap-3 justify-content-center">
+                <h:button styleClass="custom-button custom-button-primary"
+                          value="Iniciar Sesión"
+                          outcome="login.xhtml"/>
+                <h:button styleClass="custom-button custom-button-secondary"
+                          value="Registrate"
+                          outcome="Registro.xhtml"/>
+            </div>
+            <div class="text-center mt-5 pt-4 border-top-1 border-orange-100">
+                <small class="text-500 text-color-secondary">
+                    Miles de recetas te esperan
+                </small>
+            </div>
+        </div>
+        <div class="hidden lg:block absolute" style="top: 10%; left: 10%; opacity: 0.1;">
+            <span class="text-6xl">🍅</span>
+        </div>
+        <div class="hidden lg:block absolute" style="top: 20%; right: 15%; opacity: 0.1;">
+            <span class="text-5xl">🥕</span>
+        </div>
+        <div class="hidden lg:block absolute" style="bottom: 15%; left: 8%; opacity: 0.1;">
+            <span class="text-4xl">🌿</span>
+        </div>
+        <div class="hidden lg:block absolute" style="bottom: 25%; right: 10%; opacity: 0.1;">
+            <span class="text-5xl">🧄</span>
+        </div>
+    </div>
+</h:body>
 </html>

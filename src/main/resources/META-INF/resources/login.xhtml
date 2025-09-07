@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
     <title>Inicio de Sesión - RecetasWeb</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+    <!-- PrimeFlex y las fuentes de la página principal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-orange.css"/>
+
     <style>
         * {
             margin: 0;
@@ -12,17 +23,48 @@
             box-sizing: border-box;
         }
 
-       body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0e6d6; /* A warm, light beige */
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0e6d6; /* A warm, light beige */
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
 
+        /* Estilos de botones de la página principal */
+        .custom-button {
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-button-primary {
+            background-color: var(--orange-500);
+            color: white;
+            border: none;
+        }
+        .custom-button-primary:hover {
+            background-color: var(--orange-600);
+        }
+
+        .custom-button-secondary {
+            background-color: transparent;
+            color: var(--orange-600);
+            border: 1px solid var(--orange-400);
+        }
+        .custom-button-secondary:hover {
+            background-color: var(--orange-50);
+        }
+
+        /* Estilos de tu página de login que se mantienen */
         body::before {
             content: '';
             position: absolute;
@@ -141,7 +183,8 @@
             letter-spacing: 0.3px;
         }
 
-        .input-group input {
+        /* Aplica los estilos a los inputs de PrimeFaces */
+        .input-group .ui-inputfield {
             width: 100%;
             padding: 16px 20px;
             border: 2px solid #e9ecef;
@@ -152,14 +195,14 @@
             outline: none;
         }
 
-        .input-group input:focus {
+        .input-group .ui-inputfield:focus {
             border-color: #667eea;
             background: white;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             transform: translateY(-2px);
         }
 
-        .input-group input:valid {
+        .input-group .ui-inputfield:valid {
             border-color: #27ae60;
         }
 
@@ -167,14 +210,15 @@
             margin-top: 35px;
         }
 
+        /* Aplica los estilos al botón de PrimeFaces */
         .login-button {
             width: 100%;
-            padding: 18px 24px;
+            padding: 14px 24px; /* Reduced vertical padding */
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 1.125rem; /* Reduced font size */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -182,6 +226,8 @@
             letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
+            border: 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .login-button::before {
@@ -208,68 +254,45 @@
             transform: translateY(-1px);
         }
 
-        .error-message {
-            background: #fff5f5;
-            border: 1px solid #fed7d7;
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: #c53030;
-            font-size: 14px;
-            margin-top: 20px;
-            display: none;
-            text-align: center;
-        }
-
-        .error-message.show {
-            display: block;
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            max-width: 350px;
-            width: 90%;
-            text-align: center;
-            z-index: 1000;
-            display: none;
-        }
-
-        .message-box.show {
-            display: block;
-        }
-
-        .message-box h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-
-        .message-box p {
-            margin-bottom: 25px;
-            color: #7f8c8d;
-        }
-
-        .message-box button {
-            background: #667eea;
-            color: white;
+        /* Estilos del nuevo botón de regreso animado */
+        .back-button {
+            background-color: #f8f9fa;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ee5a24;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 1.25rem;
+            left: 1.25rem;
+            z-index: 10;
         }
 
+        .back-button:hover {
+            background-color: #f9d8b7;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: white; /* Cambio de color para la casita */
+        }
+        
+        .back-button:hover svg {
+            transform: rotate(-10deg);
+        }
+        
+        .back-button svg {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .back-button:active {
+            transform: scale(0.95);
+        }
+        
         /* Responsive Design */
         @media (max-width: 480px) {
             .login-container {
@@ -294,40 +317,68 @@
                 padding: 16px 20px;
             }
         }
+            .small-btn {
+                width: auto !important;
+                padding: 10px 24px !important;
+                font-size: 1rem !important;
+                border-radius: 9999px !important;
+                display: block !important;
+                margin: 0 auto !important;
+        }
     </style>
-</head>
-<body>
-<div class="login-container">
-    <div class="header-section">
-        <div class="login-icon"></div>
-        <h1 class="login-title">Acceso de Usuario</h1>
-        <p class="login-subtitle">Encuentra tus recetas favoritas</p>
-        <span class="login-badge">Área de Usuarios</span>
+</h:head>
+<h:body class="min-h-screen flex align-items-center justify-content-center p-4">
+    <!-- Emojis flotantes para el efecto de fondo -->
+    <div class="hidden lg:block absolute" style="top: 10%; left: 10%; opacity: 0.1;">
+        <span class="text-6xl">🍅</span>
+    </div>
+    <div class="hidden lg:block absolute" style="top: 20%; right: 15%; opacity: 0.1;">
+        <span class="text-5xl">🥕</span>
+    </div>
+    <div class="hidden lg:block absolute" style="bottom: 15%; left: 8%; opacity: 0.1;">
+        <span class="text-4xl">🌿</span>
+    </div>
+    <div class="hidden lg:block absolute" style="bottom: 25%; right: 10%; opacity: 0.1;">
+        <span class="text-5xl">🧄</span>
     </div>
 
-    <form id="loginForm" class="login-form">
-        <div class="input-group">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" placeholder="usuario@recetas.com" />
+    <div class="login-container">
+        <!-- Botón de regreso con casita -->
+        <h:link outcome="paginaPrincipal.xhtml" styleClass="back-button" title="Volver a la página principal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+        </h:link>
+
+        <p:growl id="growl" showDetail="true" />
+        <div class="header-section">
+            <div class="login-icon"></div>
+            <h1 class="login-title">Usuarios</h1>
+            <p class="login-subtitle">Encuentra tus recetas favoritas</p>
+            <span class="login-badge">Área de Usuarios</span>
         </div>
 
-        <div class="input-group">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="••••••••" />
-        </div>
+        <h:form id="loginForm" class="login-form">
+            <div class="input-group">
+                <label for="email">Correo Electrónico</label>
+                <p:inputText id="email" value="#{loginController.email}" required="true" placeholder="usuario@recetas.com" />
+            </div>
 
-        <div class="button-group">
-            <button type="submit" class="login-button">¡Ir a la cocina!</button>
-        </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <p:password id="password" value="#{loginController.password}" required="true" placeholder="••••••••" feedback="false" />
+            </div>
 
-        <div class="error-message" id="errorMessage"></div>
-    </form>
-</div>
-
-<div class="message-box" id="messageBox">
-    <h3>Campos Requeridos</h3>
-    <p>Por favor, ingresa tu correo electrónico y contraseña.</p>
-    <button id="closeMessageBox">Aceptar</button>
-</div>
-</body>
+            <div class="button-group">
+                <!-- Se ha aplicado la clase de animación al botón de login -->
+                <p:commandButton value="¡Ir a la cocina!" action="#{loginController.login}"
+                                 update="growl"
+                                 styleClass="custom-button custom-button-primary login-button small-btn" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
 </html>

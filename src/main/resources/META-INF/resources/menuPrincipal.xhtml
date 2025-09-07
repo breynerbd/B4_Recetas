@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>RecetasWeb - Plataforma Colaborativa de Recetas</title>
+    <!-- Usamos la última versión de PrimeFlex -->
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <style>
+        /* Mantenemos los degradados personalizados ya que PrimeFlex no los incluye directamente */
+        .hero-section {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        /* Y los estilos de hover para el chip de categoría */
+        .category-chip {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .category-chip:hover {
+            background-color: #1976d2;
+            color: white;
+        }
+        /* Clase añadida para mejorar la legibilidad del texto blanco */
+        .text-shadow-subtle {
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</h:head>
+<h:body>
+    <ui:composition template="/plantilla.xhtml">
+        <ui:define name="content">
+            <!-- Usamos flexbox para el contenedor principal -->
+            <div class="flex flex-column gap-5">
+                <!-- Sección de bienvenida con clases de PrimeFlex -->
+                <div class="hero-section text-center p-5 border-round-2xl">
+                    <!-- Sombra aplicada al título principal -->
+                    <h1 class="text-6xl font-bold mb-3 text-shadow-subtle text-blue-900">🍳 RecetasWeb</h1>
+                    <!-- Sombra aplicada al subtítulo -->
+                    <p class="text-xl mb-4 text-shadow-subtle text-blue-800">Descubre, comparte y califica las mejores recetas del mundo</p>
+
+                    <h:form>
+                        <p:commandButton value="Crear Nueva Receta"
+                                         action="#{recetaController.nuevaReceta}"
+                                         oncomplete="PF('ventanaModalReceta').show()"
+                                         icon="pi pi-plus"
+                                         styleClass="p-button-lg p-button-raised p-button-rounded"
+                                         update=":dialog-receta-form" />
+                    </h:form>
+                </div>
+
+                <div class="card" style="background: #f8f9fa; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <p:carousel circular="true" autoplayInterval="3000" numVisible="3" numScroll="1">
+
+                        <!-- Tarjeta 1 -->
+                        <p:card styleClass="w-full" style="background: #ffffff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <f:facet name="header">
+                                <div style="text-align: center;">
+                                    <img src="Recetas-de-cocina-para-principiantes_2.jpg"
+                                         style="width:300px; height: auto; object-fit: cover; border-radius: 10px;" />
+                                </div>
+                            </f:facet>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <h3 style="margin: 0; font-weight: bold; background: linear-gradient(90deg, #ff6b6b, #ffa726); -webkit-background-clip: text; color: transparent;">Deliciosas</h3>
+                                <p style="margin: 2px 0 0; color: #7f8c8d; font-size: 0.9rem;">recetas para tus comidas</p>
+                            </div>
+                        </p:card>
+
+                        <!-- Tarjeta 2 -->
+                        <p:card styleClass="w-full" style="background: #ffffff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <f:facet name="header">
+                                <div style="text-align: center;">
+                                    <img src="receta.jpg"
+                                         style="width:300px; height: auto; object-fit: cover; border-radius: 10px;" />
+                                </div>
+                            </f:facet>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <h3 style="margin: 0; font-weight: bold; background: linear-gradient(90deg, #667eea, #764ba2); -webkit-background-clip: text; color: transparent;">Nuevas ideas</h3>
+                                <p style="margin: 2px 0 0; color: #7f8c8d; font-size: 0.9rem;">para explorar</p>
+                            </div>
+                        </p:card>
+
+                        <!-- Tarjeta 3 -->
+                        <p:card styleClass="w-full" style="background: #ffffff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <f:facet name="header">
+                                <div style="text-align: center;">
+                                    <img src="receta%202.jpeg"
+                                         style="width:300px; height: auto; object-fit: cover; border-radius: 10px;" />
+                                </div>
+                            </f:facet>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <h3 style="margin: 0; font-weight: bold; background: linear-gradient(90deg, #ff9a9e, #fad0c4); -webkit-background-clip: text; color: transparent;">Comparte tus</h3>
+                                <p style="margin: 2px 0 0; color: #7f8c8d; font-size: 0.9rem;">creaciones</p>
+                            </div>
+                        </p:card>
+
+                        <!-- Tarjeta 4 -->
+                        <p:card styleClass="w-full" style="background: #ffffff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <f:facet name="header">
+                                <div style="text-align: center;">
+                                    <img src="receta 3.jpg"
+                                         style="width:300px; height: auto; object-fit: cover; border-radius: 10px;" />
+                                </div>
+                            </f:facet>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <h3 style="margin: 0; font-weight: bold; background: linear-gradient(90deg, #43cea2, #185a9d); -webkit-background-clip: text; color: transparent;">Sabores únicos</h3>
+                                <p style="margin: 2px 0 0; color: #7f8c8d; font-size: 0.9rem;">para sorprenderte</p>
+                            </div>
+                        </p:card>
+
+                        <!-- Tarjeta 5 -->
+                        <p:card styleClass="w-full" style="background: #ffffff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <f:facet name="header">
+                                <div style="text-align: center;">
+                                    <img src="receta 4.jpg"
+                                         style="width:300px; height: auto; object-fit: cover; border-radius: 10px;" />
+                                </div>
+                            </f:facet>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <h3 style="margin: 0; font-weight: bold; background: linear-gradient(90deg, #f7971e, #ffd200); -webkit-background-clip: text; color: transparent;">Fáciles y rápidas</h3>
+                                <p style="margin: 2px 0 0; color: #7f8c8d; font-size: 0.9rem;">prepara en minutos</p>
+                            </div>
+                        </p:card>
+
+                        <!-- Tarjeta 6 -->
+                        <p:card styleClass="w-full" style="background: #ffffff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <f:facet name="header">
+                                <div style="text-align: center;">
+                                    <img src="receta 5.jpg"
+                                         style="width:300px; height: auto; object-fit: cover; border-radius: 10px;" />
+                                </div>
+                            </f:facet>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <h3 style="margin: 0; font-weight: bold; background: linear-gradient(90deg, #ff6a00, #ee0979); -webkit-background-clip: text; color: transparent;">Inspiración diaria</h3>
+                                <p style="margin: 2px 0 0; color: #7f8c8d; font-size: 0.9rem;">para tus comidas</p>
+                            </div>
+                        </p:card>
+
+                    </p:carousel>
+                </div>
+
+                <!--  distribución de navegación recetas incluído aquí -->
+                
+                <div class="flex flex-column md:flex-row gap-3">
+                    <div class="stats-card flex-1 p-4 border-round-2xl text-center">
+                        <i class="pi pi-book text-4xl mb-2 text-white"></i>
+                        <!-- Cambiado el color del texto a azul oscuro -->
+                        <h3 class="text-2xl font-bold text-shadow-subtle text-blue-900">#{recetaController.recetas.size()}</h3>
+                        <p class="text-blue-800">Recetas Disponibles</p>
+                    </div>
+                    <div class="stats-card flex-1 p-4 border-round-2xl text-center">
+                        <i class="pi pi-users text-4xl mb-2 text-white"></i>
+                        <!-- Cambiado el color del texto a azul oscuro -->
+                        <h3 class="text-2xl font-bold text-shadow-subtle text-blue-900">#{usuarioController.usuarios.size()}</h3>
+                        <p class="text-blue-800">Chefs Colaboradores</p>
+                    </div>
+                    <div class="stats-card flex-1 p-4 border-round-2xl text-center">
+                        <i class="pi pi-star text-4xl mb-2 text-white"></i>
+                        <!-- Cambiado el color del texto a azul oscuro -->
+                        <h3 class="text-2xl font-bold text-shadow-subtle text-blue-900">N/A</h3> <p class="text-blue-800">Calificación Promedio</p>
+                    </div>
+                </div>
+
+                <div class="surface-card p-4 border-round-2xl">
+                    <h:form id="formulario-recetas">
+                        <p:growl id="mensaje-emergente" showDetail="true" />
+
+                        <div class="surface-ground p-5 border-round-2xl mb-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">🔍 Encuentra tu Receta Perfecta</h2>
+                            <!-- Usamos 'gap' para el espacio entre elementos -->
+                            <div class="flex flex-column md:flex-row gap-3 p-fluid">
+                                <div class="flex-1">
+                                    <span class="p-float-label">
+                                        <p:inputText id="filtro-ingredientes"
+                                                     value="#{recetaController.filtroIngredientes}"
+                                                     styleClass="p-input-filled" />
+                                        <label for="filtro-ingredientes">🥕 Ingredientes...</label>
+                                    </span>
+                                </div>
+                                <div class="flex-1">
+                                    <span class="p-float-label">
+                                        <p:inputNumber id="filtro-tiempo"
+                                                       value="#{recetaController.filtroTiempo}"
+                                                       styleClass="p-input-filled" />
+                                        <label for="filtro-tiempo">⏱️ Tiempo (min)...</label>
+                                    </span>
+                                </div>
+                                <div class="flex-1">
+                                    <p:selectOneMenu value="#{recetaController.filtroCategoria}"
+                                                     styleClass="p-input-filled">
+                                        <f:selectItem itemLabel="🍽️ Todas las categorías" itemValue="" />
+                                        <f:selectItem itemLabel="🥗 Ensaladas" itemValue="ensaladas" />
+                                        <f:selectItem itemLabel="🍖 Carnes" itemValue="carnes" />
+                                        <f:selectItem itemLabel="🍝 Pastas" itemValue="pastas" />
+                                        <f:selectItem itemLabel="🧁 Postres" itemValue="postres" />
+                                        <f:selectItem itemLabel="🥤 Bebidas" itemValue="bebidas" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="flex-grow-0">
+                                    <p:commandButton value="Buscar"
+                                                     action="#{recetaController.buscarRecetas}"
+                                                     update="tabla-recetas mensaje-emergente"
+                                                     icon="pi pi-search"
+                                                     styleClass="p-button-success p-button-raised" />
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <h:outputText value="Categorías Populares: " styleClass="font-semibold" />
+                                <span class="category-chip bg-blue-100 text-blue-900 px-3 py-1 border-round-xl mx-1">🍕 Pizza</span>
+                                <span class="category-chip bg-blue-100 text-blue-900 px-3 py-1 border-round-xl mx-1">🍜 Sopas</span>
+                                <span class="category-chip bg-blue-100 text-blue-900 px-3 py-1 border-round-xl mx-1">🥘 Guisos</span>
+                                <span class="category-chip bg-blue-100 text-blue-900 px-3 py-1 border-round-xl mx-1">🍰 Repostería</span>
+                                <span class="category-chip bg-blue-100 text-blue-900 px-3 py-1 border-round-xl mx-1">🌮 Mexicana</span>
+                                <span class="category-chip bg-blue-100 text-blue-900 px-3 py-1 border-round-xl mx-1">🍱 Asiática</span>
+                            </div>
+                        </div>
+
+                        <div class="p-mb-4">
+                            <div class="surface-card p-4 border-round-2xl">
+                                <h3 class="text-xl font-bold mb-3">🚀 Acciones Rápidas</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <p:commandButton value="➕ Nueva Receta"
+                                                     action="#{recetaController.nuevaReceta}"
+                                                     oncomplete="PF('ventanaModalReceta').show()"
+                                                     icon="pi pi-plus"
+                                                     styleClass="p-button-success p-button-raised"
+                                                     update=":dialog-receta-form" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="surface-card p-4 border-round-2xl">
+                                <div class="flex align-items-center justify-content-between mb-4">
+                                    <h2 class="text-2xl font-bold">📚 Todas las Recetas</h2>
+                                    <div class="flex gap-2">
+                                        <p:commandButton icon="pi pi-refresh"
+                                                         title="Refrescar lista" />
+                                    </div>
+                                </div>
+
+                                <p:dataTable id="tabla-recetas"
+                                             var="receta"
+                                             value="#{recetaController.recetas}"
+                                             emptyMessage="No hay recetas disponibles. ¡Sé el primero en crear una!"
+                                             styleClass="p-datatable-sm p-datatable-striped"
+                                             paginator="true"
+                                             rows="10"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15">
+
+                                    <p:column headerText="📝 Receta" sortBy="#{receta.tituloReceta}">
+                                        <div>
+                                            <h:outputText value="#{receta.tituloReceta}" styleClass="font-bold text-lg" />
+                                            <br/>
+                                            <small class="text-500">
+                                                Por: #{receta.usuario.nombreUsuario}
+                                            </small>
+                                        </div>
+                                    </p:column>
+
+                                    <p:column headerText="🥘 Ingredientes" width="200">
+                                        <h:outputText value="#{receta.ingredientes}" />
+                                    </p:column>
+
+                                    <p:column headerText="⏱️ Tiempo" sortBy="#{receta.tiempoPreparacion}" width="100">
+                                        <div class="text-center">
+                                            <span class="font-bold">#{receta.tiempoPreparacion}</span>
+                                            <br/>
+                                            <small class="text-500">minutos</small>
+                                        </div>
+                                    </p:column>
+
+                                    <p:column headerText="🔧 Acciones" width="150">
+                                        <div class="flex gap-1 justify-content-center">
+                                            <p:commandButton icon="pi pi-pencil"
+                                                             title="Editar"
+                                                             oncomplete="PF('ventanaModalReceta').show()"
+                                                             action="#{recetaController.setRecetaSeleccionada(receta)}"
+                                                             update=":dialog-receta-form"
+                                                             styleClass="p-button-rounded p-button-info p-button-sm" />
+                                            <p:commandButton icon="pi pi-trash"
+                                                             title="Eliminar"
+                                                             oncomplete="PF('ventanaModalEliminar').show()"
+                                                             action="#{recetaController.setRecetaSeleccionada(receta)}"
+                                                             styleClass="p-button-rounded p-button-danger p-button-sm" />
+                                            <p:commandButton icon="pi pi-star"
+                                                             title="Calificar"
+                                                             oncomplete="PF('ventanaModalCalificar').show()"
+                                                             action="#{calificacionController.prepararCalificacion(receta)}"
+                                                             update=":dialog-calificar-form"
+                                                             styleClass="p-button-rounded p-button-warning p-button-sm" />
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+
+            <h:form id="dialog-receta-form">
+                <p:dialog header="#{recetaController.recetaSeleccionada.idReceta == null ? '➕ Nueva Receta' : '✏️ Editar Receta'}"
+                          widgetVar="ventanaModalReceta"
+                          modal="true"
+                          responsive="true"
+                          width="80%"
+                          styleClass="p-fluid">
+                    <p:tabView>
+                        <p:tab title="📝 Información Básica">
+                            <div class="flex flex-column gap-3">
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <p:inputText id="titulo"
+                                                         value="#{recetaController.recetaSeleccionada.tituloReceta}"
+                                                         required="true"
+                                                         styleClass="p-input-filled" />
+                                            <label for="titulo">🏷️ Título de la Receta</label>
+                                        </span>
+                                        <p:message for="titulo" />
+                                    </div>
+                                </div>
+                                <!-- Campo para ingresar la URL de la imagen -->
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <p:inputText id="urlImagen"
+                                                         value="#{recetaController.recetaSeleccionada.urlImagen}"
+                                                         styleClass="p-input-filled" />
+                                            <label for="urlImagen">🖼️ URL de la Imagen</label>
+                                        </span>
+                                        <p:message for="urlImagen" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </p:tab>
+
+                        <p:tab title="🥘 Ingredientes">
+                            <div class="p-field">
+                                <span class="p-float-label">
+                                    <p:inputTextarea id="ingredientes"
+                                                     value="#{recetaController.recetaSeleccionada.ingredientes}"
+                                                     rows="6"
+                                                     required="true"
+                                                     styleClass="p-input-filled" />
+                                    <label for="ingredientes">📋 Lista de Ingredientes (uno por línea)</label>
+                                </span>
+                                <p:message for="ingredientes" />
+                            </div>
+                        </p:tab>
+
+                        <p:tab title="⚙️ Detalles">
+                            <div class="flex flex-column gap-3">
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <p:inputNumber id="tiempo"
+                                                           value="#{recetaController.recetaSeleccionada.tiempoPreparacion}"
+                                                           required="true"
+                                                           styleClass="p-input-filled" />
+                                            <label for="tiempo">⏱️ Tiempo (minutos)</label>
+                                        </span>
+                                        <p:message for="tiempo" />
+                                    </div>
+                                </div>
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+
+                    <f:facet name="footer">
+                        <div class="flex justify-content-end gap-2">
+                            <p:commandButton value="💾 Guardar"
+                                             action="#{recetaController.guardarReceta}"
+                                             oncomplete="if (!args.validationFailed) PF('ventanaModalReceta').hide()"
+                                             update="dialog-receta-form :formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
+                                             icon="pi pi-save"
+                                             styleClass="p-button-success" />
+                            <p:commandButton value="❌ Cancelar"
+                                             onclick="PF('ventanaModalReceta').hide()"
+                                             type="button"
+                                             icon="pi pi-times"
+                                             styleClass="p-button-secondary" />
+                        </div>
+                    </f:facet>
+                </p:dialog>
+            </h:form>
+
+            <h:form id="dialog-eliminar-form">
+                <p:dialog header="🗑️ Confirmar Eliminación"
+                          widgetVar="ventanaModalEliminar"
+                          modal="true"
+                          responsive="true"
+                          width="400px">
+                    <div class="text-center">
+                        <i class="pi pi-exclamation-triangle text-6xl text-orange-500 mb-3"></i>
+                        <h3 class="mb-3">¿Estás seguro?</h3>
+                        <p class="mb-4">Esta acción eliminará permanentemente la receta <strong>"#{recetaController.recetaSeleccionada.tituloReceta}"</strong> y no se puede deshacer.</p>
+
+                        <div class="flex justify-content-center gap-2">
+                            <p:commandButton value="🗑️ Sí, Eliminar"
+                                             action="#{recetaController.eliminarReceta}"
+                                             oncomplete="PF('ventanaModalEliminar').hide()"
+                                             update=":formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
+                                             styleClass="p-button-danger"
+                                             icon="pi pi-trash" />
+                            <p:commandButton value="❌ Cancelar"
+                                             onclick="PF('ventanaModalEliminar').hide()"
+                                             type="button"
+                                             styleClass="p-button-secondary"
+                                             icon="pi pi-times" />
+                        </div>
+                    </div>
+                </p:dialog>
+            </h:form>
+
+            <p:dialog header="⭐ Calificar Receta"
+                      widgetVar="ventanaModalCalificar"
+                      modal="true"
+                      responsive="true"
+                      width="400px">
+                <h:form id="dialog-calificar-form">
+                    <div class="text-center">
+                        <h3 class="mb-3">#{calificacionController.recetaACalificar.tituloReceta}</h3>
+                        <div class="p-field">
+                            <label class="font-semibold">Tu calificación:</label>
+                            <p:rating value="#{calificacionController.calificacionSeleccionada.puntuacion}"
+                                      styleClass="text-2xl my-3" />
+                        </div>
+                        <div class="p-field">
+                            <span class="p-float-label">
+                                <p:inputTextarea id="comentario-calificacion"
+                                                 value="#{calificacionController.calificacionSeleccionada.comentario}"
+                                                 rows="3"
+                                                 styleClass="p-input-filled" />
+                                <label for="comentario-calificacion">💬 Comentario (opcional)</label>
+                            </span>
+                        </div>
+
+                        <div class="flex justify-content-center gap-2 mt-4">
+                            <p:commandButton value="⭐ Calificar"
+                                             action="#{calificacionController.guardarCalificacion}"
+                                             oncomplete="if (!args.validationFailed) PF('ventanaModalCalificar').hide()"
+                                             update="dialog-calificar-form :formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
+                                             styleClass="p-button-warning" />
+                            <p:commandButton value="Cancelar"
+                                             onclick="PF('ventanaModalCalificar').hide()"
+                                             type="button"
+                                             styleClass="p-button-secondary" />
+                        </div>
+                    </div>
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
+
+        <!--terminada vista menuPrincipal carrrusel-->
