@@ -59,13 +59,9 @@
                                              var="receta"
                                              value="#{recetaController.recetas}"
                                              emptyMessage="No hay recetas disponibles. ¡Sé el primero en crear una!"
-                                             styleClass="p-datatable-sm p-datatable-striped"
-                                             paginator="true"
-                                             rows="10"
-                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             rowsPerPageTemplate="5,10,15">
+                                             styleClass="p-datatable-sm p-datatable-striped">
 
-                                    <p:column headerText="📝 Receta" sortBy="#{receta.tituloReceta}">
+                                    <p:column headerText="Receta" sortBy="#{receta.tituloReceta}">
                                         <div>
                                             <h:outputText value="#{receta.tituloReceta}" styleClass="font-bold text-lg" />
                                             <br/>
@@ -75,11 +71,11 @@
                                         </div>
                                     </p:column>
 
-                                    <p:column headerText="🥘 Ingredientes" width="200">
+                                    <p:column headerText="Ingredientes" width="200">
                                         <h:outputText value="#{receta.ingredientes}" />
                                     </p:column>
 
-                                    <p:column headerText="⏱️ Tiempo" sortBy="#{receta.tiempoPreparacion}" width="100">
+                                    <p:column headerText="Tiempo" sortBy="#{receta.tiempoPreparacion}" width="100">
                                         <div class="text-center">
                                             <span class="font-bold">#{receta.tiempoPreparacion}</span>
                                             <br/>
@@ -97,15 +93,105 @@
                                                              styleClass="p-button-rounded p-button-info p-button-sm" />
                                             <p:commandButton icon="pi pi-trash"
                                                              title="Eliminar"
-                                                             oncomplete="PF('ventanaModalEliminar').show()"
+                                                             oncomplete="PF('ventanaModalEliminarReceta').show()"
                                                              action="#{recetaController.setRecetaSeleccionada(receta)}"
                                                              styleClass="p-button-rounded p-button-danger p-button-sm" />
-                                            <p:commandButton icon="pi pi-star"
-                                                             title="Calificar"
-                                                             oncomplete="PF('ventanaModalCalificar').show()"
-                                                             action="#{calificacionController.prepararCalificacion(receta)}"
-                                                             update=":dialog-calificar-form"
-                                                             styleClass="p-button-rounded p-button-warning p-button-sm" />
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <br/>
+                                <br/>
+
+                                <div class="flex align-items-center justify-content-between mb-4">
+                                    <h2 class="text-2xl font-bold">📚 Gestion de Usuarios</h2>
+                                    <div class="flex gap-2">
+                                        <p:commandButton icon="pi pi-refresh"
+                                                         title="Refrescar lista" />
+                                    </div>
+                                </div>
+                                <p:dataTable id="tabla-usuarios"
+                                             var="usuario"
+                                             value="#{usuarioController.usuarios}"
+                                             emptyMessage="No hay usuarios registrados."
+                                             styleClass="p-datatable-sm p-datatable-striped">
+
+                                    <p:column headerText="Nombre" sortBy="#{usuario.nombreUsuario}">
+                                        <div>
+                                            <h:outputText value="#{usuario.nombreUsuario}" styleClass="font-bold text-lg" />
+                                        </div>
+                                    </p:column>
+
+                                    <p:column headerText="Apellido" width="200">
+                                        <h:outputText value="#{usuario.apellidoUsuario}" />
+                                    </p:column>
+
+                                    <p:column headerText="✉Email" width="200">
+                                        <h:outputText value="#{usuario.email}" />
+                                    </p:column>
+
+                                    <p:column headerText="🏳Rol" width="200">
+                                        <h:outputText value="#{usuario.rol}" />
+                                    </p:column>
+
+                                    <p:column headerText="🔧 Acciones" width="150">
+                                        <div class="flex gap-1 justify-content-center">
+                                            <p:commandButton icon="pi pi-pencil"
+                                                             title="Editar"
+                                                             oncomplete="PF('ventanaModalUsuario').show()"
+                                                             action="#{usuarioController.setUsuarioSeleccionado(usuario)}"
+                                                             update=":dialog-usuario-form"
+                                                             styleClass="p-button-rounded p-button-info p-button-sm" />
+                                            <p:commandButton icon="pi pi-trash"
+                                                             title="Eliminar"
+                                                             oncomplete="PF('ventanaModalEliminarUsuario').show()"
+                                                             action="#{usuarioController.setUsuarioSeleccionado(usuario)}"
+                                                             styleClass="p-button-rounded p-button-danger p-button-sm" />
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <br/>
+                                <br/>
+
+                                <div class="flex align-items-center justify-content-between mb-4">
+                                    <h2 class="text-2xl font-bold">📚 Gestion de Calificaciones</h2>
+                                    <div class="flex gap-2">
+                                        <p:commandButton icon="pi pi-refresh"
+                                                         title="Refrescar lista" />
+                                    </div>
+                                </div>
+                                <p:dataTable id="tabla-calificaciones"
+                                             var="calificacion"
+                                             value="#{calificacionController.calificaciones}"
+                                             emptyMessage="No hay recetas calificadas."
+                                             styleClass="p-datatable-sm p-datatable-striped">
+
+                                    <p:column headerText="Usuario" sortBy="#{calificacion.usuario.nombreUsuario}">
+                                        <div>
+                                            <h:outputText value="#{calificacion.usuario.nombreUsuario}" styleClass="font-bold text-lg" />
+                                        </div>
+                                    </p:column>
+
+                                    <p:column headerText="Receta" width="200">
+                                        <h:outputText value="#{calificacion.receta.tituloReceta}" />
+                                    </p:column>
+
+                                    <p:column headerText="Comentario" width="200">
+                                        <h:outputText value="#{calificacion.comentario}" />
+                                    </p:column>
+
+                                    <p:column headerText="Puntuación" width="200">
+                                        <h:outputText value="#{calificacion.puntuacion}" />
+                                    </p:column>
+
+                                    <p:column headerText="Acciones" width="150">
+                                        <div class="flex gap-1 justify-content-center">
+                                            <p:commandButton icon="pi pi-trash"
+                                                             title="Eliminar"
+                                                             oncomplete="PF('ventanaModalEliminarCalificacion').show()"
+                                                             action="#{calificacionController.setCalificacionSeleccionada(calificacion)}"
+                                                             styleClass="p-button-rounded p-button-danger p-button-sm" />
                                         </div>
                                     </p:column>
                                 </p:dataTable>
@@ -187,13 +273,13 @@
 
                     <f:facet name="footer">
                         <div class="flex justify-content-end gap-2">
-                            <p:commandButton value="💾 Guardar"
+                            <p:commandButton value=" Guardar"
                                              action="#{recetaController.guardarReceta}"
                                              oncomplete="if (!args.validationFailed) PF('ventanaModalReceta').hide()"
                                              update="dialog-receta-form :formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
                                              icon="pi pi-save"
                                              styleClass="p-button-success" />
-                            <p:commandButton value="❌ Cancelar"
+                            <p:commandButton value=" Cancelar"
                                              onclick="PF('ventanaModalReceta').hide()"
                                              type="button"
                                              icon="pi pi-times"
@@ -203,26 +289,118 @@
                 </p:dialog>
             </h:form>
 
-            <h:form id="dialog-eliminar-form">
+            <h:form id="dialog-usuario-form">
+                <p:dialog header="#{usuarioController.usuarioSeleccionado.idUsuario == null ? '➕ Nuevo Usuario' : '✏️ Editar Usuario'}"
+                          widgetVar="ventanaModalUsuario"
+                          modal="true"
+                          responsive="true"
+                          width="50%"
+                          styleClass="p-fluid">
+                    <p:tabView>
+                        <p:tab title="📝 Información">
+                            <div class="flex flex-column gap-3">
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <label for="nombreUsuario"> Nombre del Usuario: </label>
+                                            <p:inputText id="nombreUsuario"
+                                                         value="#{usuarioController.usuarioSeleccionado.nombreUsuario}"
+                                                         required="true"
+                                                         styleClass="p-input-filled" />
+                                        </span>
+                                        <p:message for="nombreUsuario" />
+                                    </div>
+                                </div>
+                                <!-- Campo para ingresar la URL de la imagen -->
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <label for="apellidoUsuario"> Apellido del Usuario: </label>
+                                            <p:inputText id="apellidoUsuario"
+                                                         value="#{usuarioController.usuarioSeleccionado.apellidoUsuario}"
+                                                         styleClass="p-input-filled" />
+                                        </span>
+                                        <p:message for="apellidoUsuario" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <label for="email"> Email del Usuario: </label>
+                                            <p:inputText id="email"
+                                                         value="#{usuarioController.usuarioSeleccionado.email}"
+                                                         styleClass="p-input-filled" />
+                                        </span>
+                                        <p:message for="email" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="p-field">
+                                        <span class="p-float-label">
+                                            <label for="rol"> Rol del Usuario: </label>
+                                            <p:selectOneMenu id="rol"
+                                                             value="#{usuarioController.usuarioSeleccionado.rol}"
+                                                             styleClass="p-input-filled"
+                                                             required="true">
+                                                <f:selectItem itemLabel="Usuario" itemValue="Usuario"/>
+                                                <f:selectItem itemLabel="Moderador" itemValue="Moderador"/>
+                                            </p:selectOneMenu>
+                                        </span>
+                                        <p:message for="rol" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+
+
+
+                    <f:facet name="footer">
+                        <div class="flex justify-content-end gap-2">
+                            <p:commandButton value=" Guardar"
+                                             action="#{usuarioController.guardarUsuario()}"
+                                             oncomplete="if (!args.validationFailed) PF('ventanaModalUsuario').hide()"
+                                             update=":formulario-recetas:mensaje-emergente
+                                                     :formulario-recetas:tabla-usuarios
+                                                     :formulario-recetas:tabla-recetas
+                                                     :formulario-recetas:tabla-calificaciones"
+                                             icon="pi pi-save"
+                                             styleClass="p-button-success" />
+                            <p:commandButton value=" Cancelar"
+                                             onclick="PF('ventanaModalReceta').hide()"
+                                             type="button"
+                                             icon="pi pi-times"
+                                             styleClass="p-button-secondary" />
+                        </div>
+                    </f:facet>
+                </p:dialog>
+            </h:form>
+
+
+
+            <h:form id="dialog-eliminarUsuario-form">
                 <p:dialog header="🗑️ Confirmar Eliminación"
-                          widgetVar="ventanaModalEliminar"
+                          widgetVar="ventanaModalEliminarUsuario"
                           modal="true"
                           responsive="true"
                           width="400px">
                     <div class="text-center">
                         <i class="pi pi-exclamation-triangle text-6xl text-orange-500 mb-3"></i>
                         <h3 class="mb-3">¿Estás seguro?</h3>
-                        <p class="mb-4">Esta acción eliminará permanentemente la receta <strong>"#{recetaController.recetaSeleccionada.tituloReceta}"</strong> y no se puede deshacer.</p>
+                        <p class="mb-4">Esta acción eliminará permanentemente y no se puede deshacer.</p>
 
                         <div class="flex justify-content-center gap-2">
-                            <p:commandButton value="🗑️ Sí, Eliminar"
-                                             action="#{recetaController.eliminarReceta}"
-                                             oncomplete="PF('ventanaModalEliminar').hide()"
-                                             update=":formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
+                            <p:commandButton value=" Sí, Eliminar"
+                                             action="#{usuarioController.eliminarUsuario()}"
+                                             oncomplete="PF('ventanaModalEliminarUsuario').hide()"
+                                             update=":formulario-recetas:mensaje-emergente :formulario-recetas:tabla-usuarios"
                                              styleClass="p-button-danger"
                                              icon="pi pi-trash" />
-                            <p:commandButton value="❌ Cancelar"
-                                             onclick="PF('ventanaModalEliminar').hide()"
+                            <p:commandButton value=" Cancelar"
+                                             onclick="PF('ventanaModalEliminarUsuario').hide()"
                                              type="button"
                                              styleClass="p-button-secondary"
                                              icon="pi pi-times" />
@@ -231,47 +409,64 @@
                 </p:dialog>
             </h:form>
 
-            <p:dialog header="⭐ Calificar Receta"
-                      widgetVar="ventanaModalCalificar"
-                      modal="true"
-                      responsive="true"
-                      width="400px">
-                <h:form id="dialog-calificar-form">
+            <h:form id="dialog-eliminarReceta-form">
+                <p:dialog header="🗑️ Confirmar Eliminación"
+                          widgetVar="ventanaModalEliminarReceta"
+                          modal="true"
+                          responsive="true"
+                          width="400px">
                     <div class="text-center">
-                        <h3 class="mb-3">#{calificacionController.recetaACalificar.tituloReceta}</h3>
-                        <div class="p-field">
-                            <label class="font-semibold">Tu calificación:</label>
-                            <p:rating value="#{calificacionController.calificacionSeleccionada.puntuacion}"
-                                      styleClass="text-2xl my-3" />
-                        </div>
-                        <div class="p-field">
-                            <span class="p-float-label">
-                                <p:inputTextarea id="comentario-calificacion"
-                                                 value="#{calificacionController.calificacionSeleccionada.comentario}"
-                                                 rows="3"
-                                                 styleClass="p-input-filled" />
-                                <label for="comentario-calificacion">💬 Comentario (opcional)</label>
-                            </span>
-                        </div>
+                        <i class="pi pi-exclamation-triangle text-6xl text-orange-500 mb-3"></i>
+                        <h3 class="mb-3">¿Estás seguro?</h3>
+                        <p class="mb-4">Esta acción eliminará permanentemente y no se puede deshacer.</p>
 
-                        <div class="flex justify-content-center gap-2 mt-4">
-                            <p:commandButton value="⭐ Calificar"
-                                             action="#{calificacionController.guardarCalificacion}"
-                                             oncomplete="if (!args.validationFailed) PF('ventanaModalCalificar').hide()"
-                                             update="dialog-calificar-form :formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
-                                             styleClass="p-button-warning" />
-                            <p:commandButton value="Cancelar"
-                                             onclick="PF('ventanaModalCalificar').hide()"
+                        <div class="flex justify-content-center gap-2">
+                            <p:commandButton value=" Sí, Eliminar"
+                                             action="#{recetaController.eliminarReceta}"
+                                             oncomplete="PF('ventanaModalEliminarReceta').hide()"
+                                             update=":formulario-recetas:mensaje-emergente :formulario-recetas:tabla-recetas"
+                                             styleClass="p-button-danger"
+                                             icon="pi pi-trash" />
+                            <p:commandButton value=" Cancelar"
+                                             onclick="PF('ventanaModalEliminarReceta').hide()"
                                              type="button"
-                                             styleClass="p-button-secondary" />
+                                             styleClass="p-button-secondary"
+                                             icon="pi pi-times" />
                         </div>
                     </div>
-                </h:form>
-            </p:dialog>
+                </p:dialog>
+            </h:form>
+
+            <h:form id="dialog-eliminarCalificacion-form">
+                <p:dialog header="🗑️ Confirmar Eliminación"
+                          widgetVar="ventanaModalEliminarCalificacion"
+                          modal="true"
+                          responsive="true"
+                          width="400px">
+                    <div class="text-center">
+                        <i class="pi pi-exclamation-triangle text-6xl text-orange-500 mb-3"></i>
+                        <h3 class="mb-3">¿Estás seguro?</h3>
+                        <p class="mb-4">Esta acción eliminará permanentemente y no se puede deshacer.</p>
+
+                        <div class="flex justify-content-center gap-2">
+                            <p:commandButton value=" Sí, Eliminar"
+                                             action="#{calificacionController.eliminarCalificacion()}"
+                                             oncomplete="PF('ventanaModalEliminarCalificacion').hide()"
+                                             update=":formulario-recetas:mensaje-emergente :formulario-recetas:tabla-calificaciones"
+                                             styleClass="p-button-danger"
+                                             icon="pi pi-trash" />
+                            <p:commandButton value=" Cancelar"
+                                             onclick="PF('ventanaModalEliminarCalificacion').hide()"
+                                             type="button"
+                                             styleClass="p-button-secondary"
+                                             icon="pi pi-times" />
+                        </div>
+                    </div>
+                </p:dialog>
+            </h:form>
 
         </ui:define>
     </ui:composition>
 </h:body>
 </html>
 
-        <!--terminada vista menuPrincipal carrrusel-->
