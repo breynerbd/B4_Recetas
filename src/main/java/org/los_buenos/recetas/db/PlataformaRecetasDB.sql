@@ -6,7 +6,7 @@ create table Usuarios(
 	idUsuario integer auto_increment,
     nombreUsuario varchar(64),
     apellidoUsuario varchar(64),
-    correo varchar(128),
+    email varchar(128),
     contraseña varchar(64),
     rol enum('Usuario', 'Moderador') default 'Usuario',
     constraint pk_usuario primary key (idUsuario)
