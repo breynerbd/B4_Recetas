@@ -18,7 +18,7 @@ public class RecetaService implements IRecetaService {
     @Override
     public List<Receta> listarRecetas() {
         return recetaRepository.findAll();
-    }
+    } // Lista las recetas
 
     @Override
     public Optional<Receta> buscarRecetaPorId(Integer idReceta) {
