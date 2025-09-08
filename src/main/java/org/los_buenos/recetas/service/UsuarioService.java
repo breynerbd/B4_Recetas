@@ -42,11 +42,13 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
+    // Guarda al usuario en la base de datos
     public void guardarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
 
     @Override
+    // Elimina al usuario de la base de datos
     public void eliminarUsuario(Usuario usuario) {
         usuarioRepository.delete(usuario);
     }
