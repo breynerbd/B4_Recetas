@@ -11,6 +11,6 @@ public interface IUsuarioService {
     Optional<Usuario> buscarUsuarioPorNombreUsuario(String nombreUsuario);
     void guardarUsuario(Usuario usuario);
     void eliminarUsuario(Usuario usuario);
-    public Optional<Usuario> buscarUsuarioPorEmailYContraseña(String email, String contraseña);
+    public Optional<Usuario> buscarUsuarioPorEmailYContraseña(String email, String contraseña); //busca por email y contraseña
 
 }
